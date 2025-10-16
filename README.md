@@ -23,11 +23,11 @@ Homework: [.pdf](https://github.com/lightsociologist/soc613spr2023/tree/main/hom
 
 ### 003 Collecting and Visualizing Network Data
 
-Workshop: [.html](https://raw.githack.com/lightsociologist/soc613spr2023/main/lectures/003_visualization/week3_visualization.html) | [.rmd](https://github.com/lightsociologist/soc613spr2023/tree//main/lectures/003_visualization/week3_visualization.Rmd)
+Workshop: [.html](https://raw.githack.com/lightsociologist/soc613spr2023/main/lectures/003_visualization/week3_visualization.html) | [.rmd](https://github.com/lightsociologist/soc613spr2023/tree//main/lectures/003_visualization/week3_visualization.qmd)
 
 Homework: [.pdf](https://github.com/lightsociologist/soc613spr2023/tree/main/homework/003hw/w3_intro_data_viz.pdf) | [cheatsheet.html](https://raw.githack.com/lightsociologist/soc613spr2023/main/homework/003hw/hw3_cheat.html) | [cheatsheet.qmd](https://github.com/lightsociologist/soc613spr2023/tree/main/homework/003hw/hw3_cheat.qmd)
 
-Bonus: The visualizations in Moody and Light (2020) were not constructed in R. I have offered a few strategies for generating numerous of the images in this chapter in the following supplement: [.html](https://raw.githack.com/lightsociologist/soc613spr2023/main/lectures/003_visualization/moody_light_examples.html) | [.rmd](https://github.com/lightsociologist/soc613spr2023/tree//main/lectures/003_visualization/moody_light_examples.Rmd)
+Bonus: The visualizations in Moody and Light (2020) were not constructed in R. I have offered a few strategies for generating numerous of the images in this chapter in the following supplement: [.html](https://raw.githack.com/lightsociologist/soc613spr2023/main/lectures/003_visualization/moody_light_examples.html) | [.rmd](https://github.com/lightsociologist/soc613spr2023/tree//main/lectures/003_visualization/moody_light_examples.qmd)
 
 ### 004 Network Composition, Distance, and Balance
 
