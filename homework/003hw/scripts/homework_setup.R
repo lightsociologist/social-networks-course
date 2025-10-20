@@ -1,3 +1,4 @@
+library(dplyr)
 library(readr)
 library(tidyr)
 library(igraph)
@@ -8,14 +9,13 @@ edges <- c(1,2, 1,3, 1,6, 2,3, 2,5, 3,4, 3,5, 6,2)
 
 colors <- c("yellow", "red", "green", "yellow", "red", "green")
 
-t.g <- graph(edges, directed=T)
+t.g <- make_graph(edges, directed=T)
 
 plot(t.g, vertex.color=colors, edge.arrow.size=.5)
 
+#Make storm of swords network
 
-
-
-stormofswords <- read_csv("stormofswords.csv")
+stormofswords <- read_csv("data/stormofswords.csv")
 
 nams <- pivot_longer(stormofswords, Target:Source)
 
@@ -89,4 +89,4 @@ legend("topleft", title="House", bty = "n",
        legend=c("Other","Lannister", "Stark", "Tagaryen", "Baratheon"),
        fill=pal, border=NA)
 
-save(got_att, file="data/got_att.rda")
+#save(got_att, file="data/got_att.rda")

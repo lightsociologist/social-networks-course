@@ -14,6 +14,7 @@ This is a cheat sheet for the third homework. It works through each step in R.
 First, you need the following packages.
 
 ```{r, message=FALSE}
+library(dplyr)
 library(igraph)
 library(readr)
 library(RColorBrewer)
@@ -93,7 +94,7 @@ We can add the houses as attributes
 
 ```{r, message=F}
 
-load("~/Documents/GitHub/sna_course/week_3_visualization/week3_visualization/data/got_att.rda") #This point to where attribute file is located
+load("data/got_att.rda") #This point to where attribute file is located
 
 #Inspect thing
 
