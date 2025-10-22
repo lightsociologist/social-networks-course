@@ -31,7 +31,7 @@ Bonus: The visualizations in Moody and Light (2020) were not constructed in R. I
 
 ### 004 Network Composition, Distance, and Balance
 
-Workshop: [.html](https://raw.githack.com/lightsociologist/soc613spr2023/main/lectures/004_local/week4_local.html) | [.rmd](https://github.com/lightsociologist/soc613spr2023/tree/main/lectures/004_local/week4_local.Rmd)
+Workshop: [.html](https://raw.githack.com/lightsociologist/soc613spr2023/main/lectures/004_local/week4_local.html) | [.qmd](https://github.com/lightsociologist/soc613spr2023/tree/main/lectures/004_local/week4_local.qmd)
 
 Homework: [.pdf](https://github.com/lightsociologist/soc613spr2023/tree/main/homework/004hw/w4_homework_local_nets.pdf) | [cheatsheet.html](https://raw.githack.com/lightsociologist/soc613spr2023/main/homework/004hw/hw4_cheat.html) | [cheatsheet.qmd](https://github.com/lightsociologist/soc613spr2023/tree/main/homework/004hw/hw4_cheat.qmd)
 
