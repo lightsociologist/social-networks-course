@@ -74,27 +74,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 </head>
 
-<body class="quarto-light">
+<body class="fullcontent quarto-light">
 
 <div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
-<div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-  <nav id="TOC" role="doc-toc" class="toc-active">
-    <h2 id="toc-title">Table of contents</h2>
-   
-  <ul>
-  <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction">Introduction</a></li>
-  <li><a href="#node-degree" id="toc-node-degree" class="nav-link" data-scroll-target="#node-degree">Node Degree</a></li>
-  <li><a href="#degree-distribution" id="toc-degree-distribution" class="nav-link" data-scroll-target="#degree-distribution">Degree Distribution</a></li>
-  <li><a href="#network-composition" id="toc-network-composition" class="nav-link" data-scroll-target="#network-composition">Network Composition</a></li>
-  <li><a href="#network-composition-mixing-matrix" id="toc-network-composition-mixing-matrix" class="nav-link" data-scroll-target="#network-composition-mixing-matrix">Network Composition: Mixing Matrix</a></li>
-  <li><a href="#network-composition-and-segregation" id="toc-network-composition-and-segregation" class="nav-link" data-scroll-target="#network-composition-and-segregation">Network Composition and Segregation</a></li>
-  <li><a href="#network-density" id="toc-network-density" class="nav-link" data-scroll-target="#network-density">Network Density</a></li>
-  <li><a href="#transitivity" id="toc-transitivity" class="nav-link" data-scroll-target="#transitivity">Transitivity</a></li>
-  <li><a href="#constraint" id="toc-constraint" class="nav-link" data-scroll-target="#constraint">Constraint</a></li>
-  <li><a href="#small-worlds" id="toc-small-worlds" class="nav-link" data-scroll-target="#small-worlds">Small Worlds</a></li>
-  </ul>
-</nav>
-</div>
+
 <main class="content" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
@@ -184,9 +167,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="cell">
 <div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>ctest<span class="sc">$</span>csize</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code> [1]  3  1 11  2  1  1  4  1  1  2  3  3 13  2  1  2  3  1  1  2  1  1  1  1  1
-[26]  1  1  1  1  1  1  1  1  1  1  1  2  1  2  1  1  1  1  1  1  1  1  1  1  1
-[51]  1  1  1  1  1  1  1  1  1  1</code></pre>
+<pre><code> [1] 1 8 1 1 1 1 2 3 1 1 1 7 4 1 1 2 1 1 9 1 1 1 2 1 1 1 1 1 1 1 1 2 1 2 1 1 1 1
+[39] 1 1 1 1 1 1 1 1 1 2 2 3 1 3 1 2 1 1 2 1 1 1 1</code></pre>
 </div>
 </div>
 <p>You may want to remove isolates. You can do this by identifying them by degree and using <code>delete_vertices</code>:</p>
@@ -334,8 +316,8 @@ ego  0  1
 <div class="cell-output cell-output-stdout">
 <pre><code>   alter
 ego  0  1
-  0 72 35
-  1 29  9</code></pre>
+  0 52 32
+  1 39 22</code></pre>
 </div>
 </div>
 <p>Note that your results will differ from mine. These are random draws.</p>
@@ -349,7 +331,7 @@ ego  0  1
 </div>
 <div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="fu">assortativity</span>(rg, <span class="fu">V</span>(rg)<span class="sc">$</span>gender)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] -0.08633668</code></pre>
+<pre><code>[1] -0.0207258</code></pre>
 </div>
 </div>
 </section>
@@ -363,7 +345,7 @@ ego  0  1
 </div>
 <div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="fu">orwg</span>(<span class="fu">simplify</span>(rg), <span class="st">"gender"</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 1.042051</code></pre>
+<pre><code>[1] 0.9726568</code></pre>
 </div>
 </div>
 <p>So the odds of a same gender tie are 58 times greater than the odds of a tie between boys and girls.</p>
@@ -533,11 +515,11 @@ ego  0  1
 </div>
 <div class="sourceCode cell-code" id="cb59"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb59-1"><a href="#cb59-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mean_distance</span>(small)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 1.611111</code></pre>
+<pre><code>[1] 1.612613</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb61"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb61-1"><a href="#cb61-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mean_distance</span>(rg)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 2.715465</code></pre>
+<pre><code>[1] 2.628874</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb63"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb63-1"><a href="#cb63-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mean_distance</span>(valente)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -545,11 +527,11 @@ ego  0  1
 </div>
 <div class="sourceCode cell-code" id="cb65"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb65-1"><a href="#cb65-1" aria-hidden="true" tabindex="-1"></a><span class="fu">transitivity</span>(small)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 0.3676093</code></pre>
+<pre><code>[1] 0.3827792</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb67"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb67-1"><a href="#cb67-1" aria-hidden="true" tabindex="-1"></a><span class="fu">transitivity</span>(rg)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 0.2508897</code></pre>
+<pre><code>[1] 0.1979167</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb69"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb69-1"><a href="#cb69-1" aria-hidden="true" tabindex="-1"></a><span class="fu">transitivity</span>(valente)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">

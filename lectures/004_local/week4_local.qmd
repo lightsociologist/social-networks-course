@@ -2,13 +2,7 @@
 title: "Week 4: Overview of Local Networks"
 author: "Ryan Light"
 format:
-  html:
-    toc: true
-    number-sections: false
-execute:
-  echo: true
-  warning: false
-  message: false
+  html: default
 ---
 
 ## Introduction
