@@ -86,7 +86,7 @@ list\$csize consists of a vector of component sizes. If those sizes are 1s excep
 ```{r echo=TRUE, message=FALSE}
 ctest$csize
 ```
-You may want to remove isolates. You can do this by identifying them by degree and using `delete.vertices`: 
+You may want to remove isolates. You can do this by identifying them by degree and using `delete_vertices`: 
 
 ```{r echo=TRUE, message=FALSE}
 isolates <- which(degree(test.g)==0)

@@ -184,12 +184,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="cell">
 <div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>ctest<span class="sc">$</span>csize</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code> [1]  2  3 10  1  9  1  5  5  1  2  2  1  1  2  1  1  1  1  1  1  1  3  1  2  1
-[26]  1  1  1  1  1  2  1  1  2  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  2
-[51]  1  2  3  1  1  1  1  1  1  1</code></pre>
+<pre><code> [1]  3  1 11  2  1  1  4  1  1  2  3  3 13  2  1  2  3  1  1  2  1  1  1  1  1
+[26]  1  1  1  1  1  1  1  1  1  1  1  2  1  2  1  1  1  1  1  1  1  1  1  1  1
+[51]  1  1  1  1  1  1  1  1  1  1</code></pre>
 </div>
 </div>
-<p>You may want to remove isolates. You can do this by identifying them by degree and using <code>delete.vertices</code>:</p>
+<p>You may want to remove isolates. You can do this by identifying them by degree and using <code>delete_vertices</code>:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>isolates <span class="ot">&lt;-</span> <span class="fu">which</span>(<span class="fu">degree</span>(test.g)<span class="sc">==</span><span class="dv">0</span>)</span>
 <span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a></span>
@@ -334,8 +334,8 @@ ego  0  1
 <div class="cell-output cell-output-stdout">
 <pre><code>   alter
 ego  0  1
-  0 57 38
-  1 29 21</code></pre>
+  0 72 35
+  1 29  9</code></pre>
 </div>
 </div>
 <p>Note that your results will differ from mine. These are random draws.</p>
@@ -349,7 +349,7 @@ ego  0  1
 </div>
 <div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="fu">assortativity</span>(rg, <span class="fu">V</span>(rg)<span class="sc">$</span>gender)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 0.01935092</code></pre>
+<pre><code>[1] -0.08633668</code></pre>
 </div>
 </div>
 </section>
@@ -363,7 +363,7 @@ ego  0  1
 </div>
 <div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="fu">orwg</span>(<span class="fu">simplify</span>(rg), <span class="st">"gender"</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 1.162219</code></pre>
+<pre><code>[1] 1.042051</code></pre>
 </div>
 </div>
 <p>So the odds of a same gender tie are 58 times greater than the odds of a tie between boys and girls.</p>
@@ -533,11 +533,11 @@ ego  0  1
 </div>
 <div class="sourceCode cell-code" id="cb59"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb59-1"><a href="#cb59-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mean_distance</span>(small)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 1.612613</code></pre>
+<pre><code>[1] 1.611111</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb61"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb61-1"><a href="#cb61-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mean_distance</span>(rg)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 2.647147</code></pre>
+<pre><code>[1] 2.715465</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb63"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb63-1"><a href="#cb63-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mean_distance</span>(valente)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -545,11 +545,11 @@ ego  0  1
 </div>
 <div class="sourceCode cell-code" id="cb65"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb65-1"><a href="#cb65-1" aria-hidden="true" tabindex="-1"></a><span class="fu">transitivity</span>(small)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 0.3797468</code></pre>
+<pre><code>[1] 0.3676093</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb67"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb67-1"><a href="#cb67-1" aria-hidden="true" tabindex="-1"></a><span class="fu">transitivity</span>(rg)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 0.2062663</code></pre>
+<pre><code>[1] 0.2508897</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb69"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb69-1"><a href="#cb69-1" aria-hidden="true" tabindex="-1"></a><span class="fu">transitivity</span>(valente)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
