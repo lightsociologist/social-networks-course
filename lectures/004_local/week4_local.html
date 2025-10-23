@@ -167,8 +167,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="cell">
 <div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>ctest<span class="sc">$</span>csize</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code> [1] 1 8 1 1 1 1 2 3 1 1 1 7 4 1 1 2 1 1 9 1 1 1 2 1 1 1 1 1 1 1 1 2 1 2 1 1 1 1
-[39] 1 1 1 1 1 1 1 1 1 2 2 3 1 3 1 2 1 1 2 1 1 1 1</code></pre>
+<pre><code> [1]  2  1  1  1  2  2  1  7  4  4  1  1  3  1  1  1 11  1  1  1  1  4  3  2  1
+[26]  2  3  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  2  2  1  1  1  3  1
+[51]  1  1  1  1  1  1  1  1  1  1</code></pre>
 </div>
 </div>
 <p>You may want to remove isolates. You can do this by identifying them by degree and using <code>delete_vertices</code>:</p>
@@ -290,7 +291,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </figure>
 </div>
 </div>
-<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mixingm</span>(valente, <span class="st">'gender'</span>)  <span class="co"># the density option would provide proportional representation</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>genmix <span class="ot">&lt;-</span> <span class="fu">mixingm</span>(valente, <span class="st">'gender'</span>)    </span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(genmix)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>   alter
 ego  0  1
@@ -298,26 +300,37 @@ ego  0  1
   1  3 82</code></pre>
 </div>
 </div>
+<p>We can easily construct a proprtional mixing matrix using base R.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>prop_genmix <span class="ot">&lt;-</span> genmix <span class="sc">/</span> <span class="fu">rowSums</span>(genmix)</span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a><span class="fu">round</span>(prop_genmix, <span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>   alter
+ego     0     1
+  0 1.000 0.000
+  1 0.035 0.965</code></pre>
+</div>
+</div>
 <p>Now let’s compare to a random graph with the same number of nodes and edges. We use the <code>sample_gnm()</code> function to make this random graph.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>rg <span class="ot">&lt;-</span> <span class="fu">sample_gnm</span>(<span class="fu">length</span>(<span class="fu">V</span>(valente)), <span class="fu">length</span>(<span class="fu">E</span>(valente)),  <span class="at">directed=</span>T)   <span class="co"># a random graph with the same number of nodes &amp; edges as the Valente graph above</span></span>
-<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a><span class="fu">V</span>(rg)<span class="sc">$</span>gender <span class="ot">&lt;-</span> <span class="fu">sample</span>(<span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">1</span>), <span class="fu">length</span>(<span class="fu">V</span>(rg)), <span class="at">replace=</span>T, <span class="at">prob=</span><span class="fu">c</span>(<span class="dv">22</span><span class="sc">/</span><span class="dv">37</span>, <span class="dv">15</span><span class="sc">/</span><span class="dv">37</span>))  <span class="co">#randomly assigning gender, matching the probabilities from the Valente graph</span></span>
-<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(rg, <span class="at">vertex.label=</span> <span class="cn">NA</span>, <span class="at">edge.arrow.size=</span><span class="fl">0.02</span>,<span class="at">vertex.size =</span> <span class="dv">5</span>, <span class="at">vertex.color=</span><span class="fu">V</span>(rg)<span class="sc">$</span>gender<span class="sc">*</span><span class="dv">2</span>, <span class="at">xlab =</span> <span class="st">"Erdos-Renyi Random Graph"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>rg <span class="ot">&lt;-</span> <span class="fu">sample_gnm</span>(<span class="fu">length</span>(<span class="fu">V</span>(valente)), <span class="fu">length</span>(<span class="fu">E</span>(valente)),  <span class="at">directed=</span>T)   <span class="co"># a random graph with the same number of nodes &amp; edges as the Valente graph above</span></span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a><span class="fu">V</span>(rg)<span class="sc">$</span>gender <span class="ot">&lt;-</span> <span class="fu">sample</span>(<span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">1</span>), <span class="fu">length</span>(<span class="fu">V</span>(rg)), <span class="at">replace=</span>T, <span class="at">prob=</span><span class="fu">c</span>(<span class="dv">22</span><span class="sc">/</span><span class="dv">37</span>, <span class="dv">15</span><span class="sc">/</span><span class="dv">37</span>))  <span class="co">#randomly assigning gender, matching the probabilities from the Valente graph</span></span>
+<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-5"><a href="#cb31-5" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(rg, <span class="at">vertex.label=</span> <span class="cn">NA</span>, <span class="at">edge.arrow.size=</span><span class="fl">0.02</span>,<span class="at">vertex.size =</span> <span class="dv">5</span>, <span class="at">vertex.color=</span><span class="fu">V</span>(rg)<span class="sc">$</span>gender<span class="sc">*</span><span class="dv">2</span>, <span class="at">xlab =</span> <span class="st">"Erdos-Renyi Random Graph"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="week4_local_files/figure-html/unnamed-chunk-16-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="week4_local_files/figure-html/unnamed-chunk-17-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
-<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mixingm</span>(rg, <span class="st">'gender'</span>)   </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mixingm</span>(rg, <span class="st">'gender'</span>)   </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>   alter
 ego  0  1
-  0 52 32
-  1 39 22</code></pre>
+  0 47 34
+  1 37 27</code></pre>
 </div>
 </div>
 <p>Note that your results will differ from mine. These are random draws.</p>
@@ -325,13 +338,13 @@ ego  0  1
 <p>See:</p>
 <p>Newman, M. E. (2003). Mixing patterns in networks. Physical review E, 67(2), 026126.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="fu">assortativity</span>(valente, <span class="fu">V</span>(valente)<span class="sc">$</span>gender)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="fu">assortativity</span>(valente, <span class="fu">V</span>(valente)<span class="sc">$</span>gender)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 0.9585236</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="fu">assortativity</span>(rg, <span class="fu">V</span>(rg)<span class="sc">$</span>gender)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="fu">assortativity</span>(rg, <span class="fu">V</span>(rg)<span class="sc">$</span>gender)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] -0.0207258</code></pre>
+<pre><code>[1] 0.002134301</code></pre>
 </div>
 </div>
 </section>
@@ -339,13 +352,13 @@ ego  0  1
 <h2 class="anchored" data-anchor-id="network-composition-and-segregation">Network Composition and Segregation</h2>
 <p>One way of thinking about how a network is segregated is to calculate the odds of a within-group tie. The <code>netseg</code> package has a function - <code>orwg</code> - to construct this ratio.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="fu">orwg</span>(<span class="fu">simplify</span>(valente), <span class="st">"gender"</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="fu">orwg</span>(<span class="fu">simplify</span>(valente), <span class="st">"gender"</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 58.15254</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="fu">orwg</span>(<span class="fu">simplify</span>(rg), <span class="st">"gender"</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="fu">orwg</span>(<span class="fu">simplify</span>(rg), <span class="st">"gender"</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 0.9726568</code></pre>
+<pre><code>[1] 1.068932</code></pre>
 </div>
 </div>
 <p>So the odds of a same gender tie are 58 times greater than the odds of a tie between boys and girls.</p>
@@ -356,18 +369,31 @@ ego  0  1
 <p>Network density provides an indication of the strong ties within the network.</p>
 <p>It is the number of ties/number of possible ties. We can find the measure for the entire graph. The <code>edge_density</code> function in <code>igraph</code> will compute this measure.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="fu">edge_density</span>(valente)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="fu">edge_density</span>(valente)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 0.1088589</code></pre>
 </div>
 </div>
 <p>We can also compute the density for each ego network within a graph.</p>
-<p>If you have an <code>igraph</code> object, you can pull out each ego network using <code>make_ego_net</code>.</p>
+<p>If you have an <code>igraph</code> object, you can pull out each ego network using <code>make_ego_net</code>. Then you can plot ego networks.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a>valente_ego_dens <span class="ot">&lt;-</span> <span class="fu">make_ego_graph</span>(valente, <span class="dv">1</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a><span class="fu">vapply</span>(graph.density, <span class="fu">numeric</span>(<span class="dv">1</span>))</span>
-<span id="cb42-3"><a href="#cb42-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb42-4"><a href="#cb42-4" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(valente_ego_dens)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a>vego <span class="ot">&lt;-</span> <span class="fu">make_ego_graph</span>(valente, <span class="dv">1</span>) </span>
+<span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-3"><a href="#cb44-3" aria-hidden="true" tabindex="-1"></a><span class="fu">plot.igraph</span>(vego[[<span class="dv">4</span>]], <span class="at">edge.arrow.size=</span>.<span class="dv">2</span>, <span class="at">vertex.label.cex=</span>.<span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="week4_local_files/figure-html/unnamed-chunk-21-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Then you can use <code>graph.density</code> to calculate density across the egos. Note that you can pipe this so you don’t need to store the egos.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a>valente_ego_dens <span class="ot">&lt;-</span> <span class="fu">make_ego_graph</span>(valente, <span class="dv">1</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a><span class="fu">vapply</span>(graph.density, <span class="fu">numeric</span>(<span class="dv">1</span>))</span>
+<span id="cb45-3"><a href="#cb45-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-4"><a href="#cb45-4" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(valente_ego_dens)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 0.5833333 0.2321429 0.4761905 0.3928571 0.5476190 0.8000000</code></pre>
 </div>
@@ -375,29 +401,29 @@ ego  0  1
 <p>We may want to know the relationship between ego network density and ego network size. Are larger networks more dense.</p>
 <p>We can use the <code>ego_size()</code> function to calculate the size of each ego’s local network.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a>ego.size <span class="ot">&lt;-</span> <span class="fu">ego_size</span>(valente)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb47"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a>ego.size <span class="ot">&lt;-</span> <span class="fu">ego_size</span>(valente)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>And we can check out the average ego network size now by just using the <code>mean()</code> function in base R.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(ego.size)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb48"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(ego.size)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 6.945946</code></pre>
 </div>
 </div>
 <p>We can store these in a data frame for easy access.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb47"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a>den.df<span class="ot">&lt;-</span><span class="fu">data.frame</span>(<span class="at">density=</span>valente_ego_dens, <span class="at">size=</span>ego.size)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb50"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a>den.df<span class="ot">&lt;-</span><span class="fu">data.frame</span>(<span class="at">density=</span>valente_ego_dens, <span class="at">size=</span>ego.size)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>And we can plot the relationship in <code>ggplot</code>.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb48"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data=</span>den.df, <span class="fu">aes</span>(size, density))<span class="sc">+</span></span>
-<span id="cb48-2"><a href="#cb48-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>()<span class="sc">+</span></span>
-<span id="cb48-3"><a href="#cb48-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method=</span><span class="st">'lm'</span>, <span class="at">level=</span>.<span class="dv">95</span>, <span class="at">formula=</span>y<span class="sc">~</span>x)<span class="sc">+</span></span>
-<span id="cb48-4"><a href="#cb48-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">panel.background =</span> <span class="fu">element_blank</span>())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb51"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data=</span>den.df, <span class="fu">aes</span>(size, density))<span class="sc">+</span></span>
+<span id="cb51-2"><a href="#cb51-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>()<span class="sc">+</span></span>
+<span id="cb51-3"><a href="#cb51-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method=</span><span class="st">'lm'</span>, <span class="at">level=</span>.<span class="dv">95</span>, <span class="at">formula=</span>y<span class="sc">~</span>x)<span class="sc">+</span></span>
+<span id="cb51-4"><a href="#cb51-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">panel.background =</span> <span class="fu">element_blank</span>())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="week4_local_files/figure-html/unnamed-chunk-24-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="week4_local_files/figure-html/unnamed-chunk-26-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
@@ -407,36 +433,36 @@ ego  0  1
 <h2 class="anchored" data-anchor-id="transitivity">Transitivity</h2>
 <p>Transitivity is a measure of local clustering. It consists of the proportion of closed triads given all possible triads. The <code>igraph</code> default for the <code>transitivity</code> function is for each node but you can also calculate for the whole graph. This is an indication of how much local clustering is occurring in the graph as a whole. Note that specifying “type=local” we are calculating over each respondents ego network.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb49"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a><span class="fu">transitivity</span>(valente)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb52"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a><span class="fu">transitivity</span>(valente)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 0.5142857</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb51"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a>transitive.valente <span class="ot">&lt;-</span> <span class="fu">transitivity</span>(valente, <span class="at">type=</span><span class="st">"local"</span>)</span>
-<span id="cb51-2"><a href="#cb51-2" aria-hidden="true" tabindex="-1"></a>ego.size <span class="ot">&lt;-</span> <span class="fu">ego_size</span>(valente)</span>
-<span id="cb51-3"><a href="#cb51-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb51-4"><a href="#cb51-4" aria-hidden="true" tabindex="-1"></a>tr.df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">transitivity=</span>transitive.valente, <span class="at">size=</span>ego.size)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb54"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a>transitive.valente <span class="ot">&lt;-</span> <span class="fu">transitivity</span>(valente, <span class="at">type=</span><span class="st">"local"</span>)</span>
+<span id="cb54-2"><a href="#cb54-2" aria-hidden="true" tabindex="-1"></a>ego.size <span class="ot">&lt;-</span> <span class="fu">ego_size</span>(valente)</span>
+<span id="cb54-3"><a href="#cb54-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb54-4"><a href="#cb54-4" aria-hidden="true" tabindex="-1"></a>tr.df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">transitivity=</span>transitive.valente, <span class="at">size=</span>ego.size)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>We can plot transitivity by ego network size.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb52"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data=</span>tr.df,<span class="fu">aes</span>(transitivity,size))<span class="sc">+</span></span>
-<span id="cb52-2"><a href="#cb52-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>()<span class="sc">+</span></span>
-<span id="cb52-3"><a href="#cb52-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method=</span><span class="st">'lm'</span>, <span class="at">level=</span>.<span class="dv">95</span>, <span class="at">formula=</span>y<span class="sc">~</span>x)<span class="sc">+</span></span>
-<span id="cb52-4"><a href="#cb52-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">panel.background =</span> <span class="fu">element_blank</span>())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb55"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb55-1"><a href="#cb55-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data=</span>tr.df,<span class="fu">aes</span>(transitivity,size))<span class="sc">+</span></span>
+<span id="cb55-2"><a href="#cb55-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>()<span class="sc">+</span></span>
+<span id="cb55-3"><a href="#cb55-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method=</span><span class="st">'lm'</span>, <span class="at">level=</span>.<span class="dv">95</span>, <span class="at">formula=</span>y<span class="sc">~</span>x)<span class="sc">+</span></span>
+<span id="cb55-4"><a href="#cb55-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">panel.background =</span> <span class="fu">element_blank</span>())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="week4_local_files/figure-html/unnamed-chunk-26-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="week4_local_files/figure-html/unnamed-chunk-28-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
 </div>
 <p>And plot transitivity as node size in a network.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb53"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb53-1"><a href="#cb53-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot.igraph</span>(valente, <span class="at">vertex.size=</span>transitive.valente<span class="sc">*</span><span class="dv">20</span>, <span class="at">edge.arrow.size=</span>.<span class="dv">5</span>, <span class="at">vertex.color=</span><span class="fu">V</span>(valente)<span class="sc">$</span>gender)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb56"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb56-1"><a href="#cb56-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot.igraph</span>(valente, <span class="at">vertex.size=</span>transitive.valente<span class="sc">*</span><span class="dv">20</span>, <span class="at">edge.arrow.size=</span>.<span class="dv">5</span>, <span class="at">vertex.color=</span><span class="fu">V</span>(valente)<span class="sc">$</span>gender)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="week4_local_files/figure-html/unnamed-chunk-27-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="week4_local_files/figure-html/unnamed-chunk-29-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
@@ -450,47 +476,47 @@ ego  0  1
 <p>Burt, R. S. (2015). Reinforced structural holes. Social Networks, 43, 149-161.</p>
 <p>Burt, R. S. (1997). A note on social capital and network content. Social networks, 19(4), 355-373.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb54"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a>constraint.valente <span class="ot">&lt;-</span> <span class="fu">constraint</span>(valente)</span>
-<span id="cb54-2"><a href="#cb54-2" aria-hidden="true" tabindex="-1"></a>ego.size <span class="ot">&lt;-</span> <span class="fu">ego_size</span>(valente)</span>
-<span id="cb54-3"><a href="#cb54-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb54-4"><a href="#cb54-4" aria-hidden="true" tabindex="-1"></a>con.df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">constraint=</span>constraint.valente, <span class="at">size=</span>ego.size)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb57"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb57-1"><a href="#cb57-1" aria-hidden="true" tabindex="-1"></a>constraint.valente <span class="ot">&lt;-</span> <span class="fu">constraint</span>(valente)</span>
+<span id="cb57-2"><a href="#cb57-2" aria-hidden="true" tabindex="-1"></a>ego.size <span class="ot">&lt;-</span> <span class="fu">ego_size</span>(valente)</span>
+<span id="cb57-3"><a href="#cb57-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-4"><a href="#cb57-4" aria-hidden="true" tabindex="-1"></a>con.df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">constraint=</span>constraint.valente, <span class="at">size=</span>ego.size)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>We can look at the relationship between size and constraint.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb55"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb55-1"><a href="#cb55-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data=</span>con.df,<span class="fu">aes</span>(constraint,size))<span class="sc">+</span></span>
-<span id="cb55-2"><a href="#cb55-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>()<span class="sc">+</span></span>
-<span id="cb55-3"><a href="#cb55-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method=</span><span class="st">'lm'</span>, <span class="at">level=</span>.<span class="dv">95</span>, <span class="at">formula=</span>y<span class="sc">~</span>x)<span class="sc">+</span></span>
-<span id="cb55-4"><a href="#cb55-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">panel.background =</span> <span class="fu">element_blank</span>())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb58"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb58-1"><a href="#cb58-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data=</span>con.df,<span class="fu">aes</span>(constraint,size))<span class="sc">+</span></span>
+<span id="cb58-2"><a href="#cb58-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>()<span class="sc">+</span></span>
+<span id="cb58-3"><a href="#cb58-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method=</span><span class="st">'lm'</span>, <span class="at">level=</span>.<span class="dv">95</span>, <span class="at">formula=</span>y<span class="sc">~</span>x)<span class="sc">+</span></span>
+<span id="cb58-4"><a href="#cb58-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">panel.background =</span> <span class="fu">element_blank</span>())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="week4_local_files/figure-html/unnamed-chunk-29-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="week4_local_files/figure-html/unnamed-chunk-31-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
 </div>
 <p>And plot as node size.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb56"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb56-1"><a href="#cb56-1" aria-hidden="true" tabindex="-1"></a>l <span class="ot">&lt;-</span> <span class="fu">layout_with_kk</span>(valente)</span>
-<span id="cb56-2"><a href="#cb56-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb56-3"><a href="#cb56-3" aria-hidden="true" tabindex="-1"></a><span class="fu">plot.igraph</span>(valente, <span class="at">vertex.size=</span>con.df<span class="sc">$</span>constraint<span class="sc">*</span><span class="dv">10</span>, <span class="at">edge.arrow.size=</span>.<span class="dv">01</span>, <span class="at">layout=</span>l, <span class="at">vertex.color=</span><span class="fu">V</span>(valente)<span class="sc">$</span>gender)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb59"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb59-1"><a href="#cb59-1" aria-hidden="true" tabindex="-1"></a>l <span class="ot">&lt;-</span> <span class="fu">layout_with_kk</span>(valente)</span>
+<span id="cb59-2"><a href="#cb59-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb59-3"><a href="#cb59-3" aria-hidden="true" tabindex="-1"></a><span class="fu">plot.igraph</span>(valente, <span class="at">vertex.size=</span>con.df<span class="sc">$</span>constraint<span class="sc">*</span><span class="dv">10</span>, <span class="at">edge.arrow.size=</span>.<span class="dv">01</span>, <span class="at">layout=</span>l, <span class="at">vertex.color=</span><span class="fu">V</span>(valente)<span class="sc">$</span>gender)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="week4_local_files/figure-html/unnamed-chunk-30-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="week4_local_files/figure-html/unnamed-chunk-32-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
 </div>
 <p>The inverse of constraint is one way to think about brokerage. The maximal number of Burt’s constraint is 1.125. So, if we subtract 1.125 from constraint we have one brokerage score.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb57"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb57-1"><a href="#cb57-1" aria-hidden="true" tabindex="-1"></a>con.df<span class="sc">$</span>inv <span class="ot">&lt;-</span> <span class="fl">1.125</span><span class="sc">-</span>con.df<span class="sc">$</span>constraint</span>
-<span id="cb57-2"><a href="#cb57-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb57-3"><a href="#cb57-3" aria-hidden="true" tabindex="-1"></a><span class="fu">plot.igraph</span>(valente, <span class="at">vertex.size=</span>con.df<span class="sc">$</span>inv<span class="sc">*</span><span class="dv">10</span>, <span class="at">edge.arrow.size=</span>.<span class="dv">5</span>, <span class="at">vertex.color=</span><span class="fu">V</span>(valente)<span class="sc">$</span>gender)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb60"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb60-1"><a href="#cb60-1" aria-hidden="true" tabindex="-1"></a>con.df<span class="sc">$</span>inv <span class="ot">&lt;-</span> <span class="fl">1.125</span><span class="sc">-</span>con.df<span class="sc">$</span>constraint</span>
+<span id="cb60-2"><a href="#cb60-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb60-3"><a href="#cb60-3" aria-hidden="true" tabindex="-1"></a><span class="fu">plot.igraph</span>(valente, <span class="at">vertex.size=</span>con.df<span class="sc">$</span>inv<span class="sc">*</span><span class="dv">10</span>, <span class="at">edge.arrow.size=</span>.<span class="dv">5</span>, <span class="at">vertex.color=</span><span class="fu">V</span>(valente)<span class="sc">$</span>gender)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="week4_local_files/figure-html/unnamed-chunk-31-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="week4_local_files/figure-html/unnamed-chunk-33-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
@@ -503,37 +529,37 @@ ego  0  1
 <p>See: Watts, D. J., &amp; Strogatz, S. H. (1998). Collective dynamics of ’small-world’networks. nature, 393(6684), 440-442.</p>
 <p>Watts, D. J. (2004). Small worlds: the dynamics of networks between order and randomness. Princeton university press.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb58"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb58-1"><a href="#cb58-1" aria-hidden="true" tabindex="-1"></a>small <span class="ot">&lt;-</span> <span class="fu">sample_smallworld</span>(<span class="dv">1</span>, <span class="dv">37</span>, <span class="fu">mean</span>(<span class="fu">degree</span>(valente)), <span class="fl">0.5</span>, <span class="at">loops =</span> <span class="cn">FALSE</span>, <span class="at">multiple =</span> <span class="cn">FALSE</span>)</span>
-<span id="cb58-2"><a href="#cb58-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb58-3"><a href="#cb58-3" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(small, <span class="at">vertex.label=</span> <span class="cn">NA</span>, <span class="at">edge.arrow.size=</span><span class="fl">0.02</span>,<span class="at">vertex.size =</span> <span class="dv">5</span>, <span class="at">xlab =</span> <span class="st">"Small world model"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb61"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb61-1"><a href="#cb61-1" aria-hidden="true" tabindex="-1"></a>small <span class="ot">&lt;-</span> <span class="fu">sample_smallworld</span>(<span class="dv">1</span>, <span class="dv">37</span>, <span class="fu">mean</span>(<span class="fu">degree</span>(valente)), <span class="fl">0.5</span>, <span class="at">loops =</span> <span class="cn">FALSE</span>, <span class="at">multiple =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb61-2"><a href="#cb61-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb61-3"><a href="#cb61-3" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(small, <span class="at">vertex.label=</span> <span class="cn">NA</span>, <span class="at">edge.arrow.size=</span><span class="fl">0.02</span>,<span class="at">vertex.size =</span> <span class="dv">5</span>, <span class="at">xlab =</span> <span class="st">"Small world model"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="week4_local_files/figure-html/unnamed-chunk-32-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="week4_local_files/figure-html/unnamed-chunk-34-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
-<div class="sourceCode cell-code" id="cb59"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb59-1"><a href="#cb59-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mean_distance</span>(small)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb62"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb62-1"><a href="#cb62-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mean_distance</span>(small)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 1.612613</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb61"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb61-1"><a href="#cb61-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mean_distance</span>(rg)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb64"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb64-1"><a href="#cb64-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mean_distance</span>(rg)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 2.628874</code></pre>
+<pre><code>[1] 2.668981</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb63"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb63-1"><a href="#cb63-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mean_distance</span>(valente)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb66"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb66-1"><a href="#cb66-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mean_distance</span>(valente)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 3.424561</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb65"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb65-1"><a href="#cb65-1" aria-hidden="true" tabindex="-1"></a><span class="fu">transitivity</span>(small)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb68"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb68-1"><a href="#cb68-1" aria-hidden="true" tabindex="-1"></a><span class="fu">transitivity</span>(small)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 0.3827792</code></pre>
+<pre><code>[1] 0.3872881</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb67"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb67-1"><a href="#cb67-1" aria-hidden="true" tabindex="-1"></a><span class="fu">transitivity</span>(rg)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb70"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb70-1"><a href="#cb70-1" aria-hidden="true" tabindex="-1"></a><span class="fu">transitivity</span>(rg)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 0.1979167</code></pre>
+<pre><code>[1] 0.140708</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb69"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb69-1"><a href="#cb69-1" aria-hidden="true" tabindex="-1"></a><span class="fu">transitivity</span>(valente)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb72"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb72-1"><a href="#cb72-1" aria-hidden="true" tabindex="-1"></a><span class="fu">transitivity</span>(valente)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 0.5142857</code></pre>
 </div>

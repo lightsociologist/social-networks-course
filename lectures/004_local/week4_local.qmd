@@ -186,9 +186,17 @@ We may want to know how many in-group or out-group ties there are. In sociology,
 
 ```{r}
 plot.igraph(valente, vertex.color=V(valente)$gender)
-mixingm(valente, 'gender')	# the density option would provide proportional representation
+genmix <- mixingm(valente, 'gender')	
+print(genmix)
+
 ```
 
+We can easily construct a proprtional mixing matrix using base R.
+
+```{r}
+prop_genmix <- genmix / rowSums(genmix)
+round(prop_genmix, 3)
+```
 Now let's compare to a random graph with the same number of nodes and edges. We use the `sample_gnm()` function to make this random graph.
 
 ```{r}
@@ -247,10 +255,19 @@ edge_density(valente)
 
 We can also compute the density for each ego network within a graph.
 
-If you have an `igraph` object, you can pull out each ego network using `make_ego_net`.
+If you have an `igraph` object, you can pull out each ego network using `make_ego_net`. Then you can plot ego networks.
 
 ```{r, echo=TRUE}
 
+vego <- make_ego_graph(valente, 1) 
+
+plot.igraph(vego[[4]], edge.arrow.size=.2, vertex.label.cex=.5)
+
+```
+
+Then you can use `graph.density` to calculate density across the egos. Note that you can pipe this so you don't need to store the egos.
+
+```{r, echo=TRUE}
 valente_ego_dens <- make_ego_graph(valente, 1) %>%
 vapply(graph.density, numeric(1))
 
