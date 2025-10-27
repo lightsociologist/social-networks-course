@@ -24,7 +24,7 @@ Next, we bring the data into igraph. This school data is stored as a pajek file.
 
 ```{r, message=FALSE}
 
-sch23 <- read.graph("data/sch23.net", format="pajek")
+sch23 <- read_graph("data/sch23.net", format="pajek")
 
 ```
 
@@ -47,9 +47,9 @@ Let's examine some basic features of the network before turning to the local con
 
 ```{r, message=FALSE}
 
-is.directed(sch23)
+is_directed(sch23)
 
-is.connected(sch23)
+is_connected(sch23)
 
 vcount(sch23)
 
@@ -71,7 +71,7 @@ We can see that there are 12 nodes with no degree. This could be lonely folks or
 
 isolates <- which(degree(sch23)==0) 
 
-school <- delete.vertices(sch23, isolates)
+school <- delete_vertices(sch23, isolates)
 
 ```
 
@@ -93,7 +93,7 @@ Next, we can look at density. Let's look at the density for the entire graph.
 
 ```{r, message=FALSE}
 
-graph.density(school)
+edge_density(school)
 
 ```
 
@@ -155,7 +155,7 @@ First let's construct a mixing matrix for sex.
 
 ```{r, message=FALSE}
 
-mixingm(school, "sex")
+mixingm(simplify(school), "sex")
 
 ```
 
@@ -164,7 +164,7 @@ What about mixing across grades?
 
 ```{r, message=FALSE}
 
-mixingm(school, "grade")
+mixingm(simplify(school), "grade")
 
 ```
 
@@ -187,12 +187,12 @@ And we can look at the odds of a within group tie.
 
 ```{r, message=FALSE}
 
-orwg(school, "sex")
+orwg(simplify(school), "sex")
 
 ```
 ```{r, message=FALSE}
 
-orwg(school, "grade")
+orwg(simplify(school), "grade")
 
 ```
 
@@ -202,7 +202,7 @@ Here we use erdos.renyi.game to build a graph with the same number of nodes and 
 
 ```{r, message=FALSE}
 
-rg <- erdos.renyi.game(length(V(school)), length(E(school)), type="gnm", directed=T)
+rg <- sample_gnm(length(V(school)), length(E(school)), directed=T)
 
 ```
 
@@ -255,7 +255,7 @@ Plot degree of graph and sex
 
 ```{r, message=FALSE}
 
-V(sch23)$degree <- v_deg
+V(sch23)$degree <- degree(sch23)
 
 plot.igraph(sch23, vertex.size=V(sch23)$degree/5, vertex.color=V(sch23)$sex, edge.arrow.size=.01,
             vertex.label=NA)
