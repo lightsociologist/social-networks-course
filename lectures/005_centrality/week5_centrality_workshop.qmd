@@ -29,7 +29,7 @@ Radial: Whether the actor retains the good to pass to others (Information, Disea
 
 The off-the-shelf measures do not always match the social process of interest, so researchers need to be mindful of this and the future of centrality may include induced measures that are more theoretically precise.
 
-![Borgatti Centrality Framework](images/borgatti_centrality.JPG)
+![Borgatti Centrality Framework](images/borgatti_centrality_frame.JPG)
 
 For the purposes of this workshop, we will need several packages starting with `igraph` for most of the network analysis, `ggplot2` for some graphs, `dplyr` for data wrangling, `Hmisc` for constructing a correlation matrix, `CINNA` just to show the centrality options available, `intergraph` to move from `igraph` to `sna` and `sna` for looking at brokerage. We use `import::from` and select only the `brokerage` function from `sna` to avoid confusing dependencies.
 
