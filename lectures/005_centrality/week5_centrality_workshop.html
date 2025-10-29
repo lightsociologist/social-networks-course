@@ -118,7 +118,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>Substantively, the key question for centrality is knowing what is flowing through the network. The key features are:</p>
 <p>Radial: Whether the actor retains the good to pass to others (Information, Diseases). Nodes are the endpoint. Medial: Whether they pass the good and then lose it (physical objects) - Nodes are itermediaries. Distance: Whether the ket factor is distance - typically paths separating nodes. Frequency: Whether the key factor is the number of alters one encounters (information)</p>
 <p>The off-the-shelf measures do not always match the social process of interest, so researchers need to be mindful of this and the future of centrality may include induced measures that are more theoretically precise.</p>
-<p><img src="images/borgatti_centrality.jpg" class="img-fluid"></p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/borgatti_centrality.JPG" class="img-fluid figure-img"></p>
+<figcaption>Borgatti Centrality Framework</figcaption>
+</figure>
+</div>
 <p>For the purposes of this workshop, we will need several packages starting with <code>igraph</code> for most of the network analysis, <code>ggplot2</code> for some graphs, <code>dplyr</code> for data wrangling, <code>Hmisc</code> for constructing a correlation matrix, <code>CINNA</code> just to show the centrality options available, <code>intergraph</code> to move from <code>igraph</code> to <code>sna</code> and <code>sna</code> for looking at brokerage. We use <code>import::from</code> and select only the <code>brokerage</code> function from <code>sna</code> to avoid confusing dependencies.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(igraph)</span>
