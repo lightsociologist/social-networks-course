@@ -1,7 +1,9 @@
 ---
 title: "Week 5: Introduction to Centrality"
 author: "Ryan Light"
-format: html
+format: 
+  html:
+    embed-resources: true
 editor: visual
 ---
 
@@ -17,7 +19,7 @@ Conceptually, centrality is fairly straight forward: we want to identify which n
 
 Node Level Measures: Degree, Closeness, Betweenness, Power/Eigenvector
 
-Graph Level measures: Centralization
+Graph Level measures: Centralization - Most centralization scores are normalized so that 1 is maximum centralization or where all the ties head to a single node (e.g,. a star). Feel free to play around with this by using the `make star` function in `igraph`. 
 
 ## Working with Centrality
 
@@ -86,7 +88,7 @@ plot.igraph(flomarriage, vertex.size=degree_centrality*5,
 
 ## Degree Centralization: A Graph Property
 
-We can also construct degree as a graph property capturing the extent to which the graph is controlled by a single node: `centr_degree` in `igraph`.
+We can also construct degree as a graph property capturing the extent to which the graph is controlled by a single node: `centr_degree` in `igraph`. Remember that this approaches 1 the extent to which it is a star.
 
 ```{r  message=FALSE, echo=TRUE}
 
@@ -95,6 +97,27 @@ centr_degree(flomarriage, normalized=T)
 ```
 
 Here `$res` are the degree scores for each node, `centralization` is the graph level index, and the `max` is the theoretical maximum for the unnormalized graph if everyone was connected to everyone else and is the denominator in the normalization indicated by `normalized=T`.
+
+Let's check against a star and a completed graph.
+
+First, the star:
+
+```{r  message=FALSE, echo=TRUE}
+
+star.g <- make_star(vcount(flomarriage), mode="undirected")
+
+centr_degree(star.g, normalized=T)
+
+```
+Then the full graph:
+
+```{r  message=FALSE, echo=TRUE}
+
+full.g <- make_full_graph(vcount(flomarriage), directed=F)
+
+centr_degree(full.g, normalized=T)
+
+```
 
 ## Closeness Centrality: Inverse Distance
 
@@ -168,7 +191,7 @@ plot.igraph(flomarriage, vertex.size=eig_centrality$vector*10,
 
 ## Quick addition: K-Core Decomposition
 
-This can be an interesting way to think about kind of subgraph groupiness as a type of centrality. The k-core is the maximal subgraph where each vertex has at least k degrees. This is useful for very large graphs like Gonzales-Bailon et al. (2011).
+This can be an interesting way to think about kind of subgraph groupiness as a type of centrality. The k-core is the maximal subgraph where each vertex has at least k degrees. So, each vertex is assigned to its maximum core (where k+1) or where it belongs to k, but not k+1. This is useful for very large graphs like Gonzales-Bailon et al. (2011).
 
 `coreness` in `igraph` decomposes cores.
 
