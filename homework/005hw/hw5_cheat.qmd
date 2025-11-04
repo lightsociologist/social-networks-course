@@ -19,19 +19,19 @@ library(ggplot2)
 library(dplyr)
 ```
 
-Next, we bring the data into igraph. There are two networks as there are two towns.
+Next, we bring the data from Valente (1996) into igraph. There are two networks as there are two towns.
 
 
 ```{r, message=FALSE}
 
-k1 <- read.graph("data/Korea1.net", format="pajek")
+k1 <- read_graph("data/Korea1.net", format="pajek")
 
-k2 <- read.graph("data/Korea2.net", format="pajek")
+k2 <- read_graph("data/Korea2.net", format="pajek")
 
 
 ```
 
-Now we can load attributes data - (1=adopted modern methods, 2=did not adopt modern methods) - and store the data in the igraph objects.
+Now we can load attributes data on whether respondents adopted "modern family planning methods" - (1=adopted modern methods, 2=did not adopt modern methods) - and store the data in the igraph objects.
 
 ```{r, message=FALSE}
 
