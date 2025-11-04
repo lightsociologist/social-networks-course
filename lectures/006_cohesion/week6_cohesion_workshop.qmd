@@ -17,7 +17,7 @@ One of the fundamental goals of social network analysis is to locate groups of n
 
 The most basic way to think about this is density, which of course is at the node level.
 
-First, we need to load the packages for this workshop. **sna** and **network** will be used for blockmodeling. We load them first as they share functions with `igraph` and we want to priortize `igraph`, which we load next. We load `RColorBrewer` so that we can prettify the `igraph` networks and `intergraph` for switching between `igraph` and `network` objects.
+First, we need to load the packages for this workshop. `sna` and `network` will be used for blockmodeling. We load them first as they share functions with `igraph` and we want to priortize `igraph`, which we load next. We load `RColorBrewer` so that we can prettify the `igraph` networks and `intergraph` for switching between `igraph` and `network` objects.
 
 ```{r results='hide', echo=TRUE, message=FALSE}
 
