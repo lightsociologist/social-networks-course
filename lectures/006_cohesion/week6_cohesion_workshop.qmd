@@ -81,7 +81,7 @@ print(comps$csize)
 
 ```
 
-Next, we can calculate bicomponents and plot the bicomponent. `biconnected_components` results in several objects, but to pick the subgraph we can select from the list of bicomponents stored as `$components`. If we want to identify the largest bicomponent we can use `max(length)`. So, if we store the results of `biconnected.components` in an object called biconnected, we can select the largest bicomponent by:
+Next, we can calculate bicomponents and plot the bicomponent. `biconnected_components` results in several objects, but to pick the subgraph we can select from the list of bicomponents stored as `$components`. If we want to identify the largest bicomponent we can use `max(length)`. So, if we store the results of `biconnected_components` in an object called biconnected, we can select the largest bicomponent by:
 
 `bicomponent.org$components[[max(length(bicomponent.org$components))]]`
 
