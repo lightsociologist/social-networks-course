@@ -32,6 +32,8 @@ library(intergraph)
 
 Let's get a quick look at our network for this week: Zachary's Karate Club. The nodes are members of a karate club and edges are interactions. The network occurs just prior to a split between the Teacher (node 1) and the club president (node 34). This is the most common exemplar network. Its popularity inspired me to include the network as the front image of the *Oxford Handbook of Social Networks*.
 
+![](images/handbook_cover.jpg)
+
 I have stored the network as an R object that we can simply `load`.
 
 ```{r message=FALSE, echo=T}
@@ -46,6 +48,7 @@ Also note that we store the layout of the graph using the `layout_with_kk(g)` fu
 
 ```{r message=FALSE, echo=T}
 
+set.seed(1234) 
 layout.kk <- layout_with_kk(karate)
 
 kdens <- make_ego_graph(karate, 1) %>%
