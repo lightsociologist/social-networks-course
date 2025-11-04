@@ -45,7 +45,7 @@ Slides: These slides from previous iterations of the course are mostly redundant
 
 ### 006 Cohesion and Community Detection
 
-Workshop: [.html](https://raw.githack.com/lightsociologist/soc613spr2023/main/lectures/006_cohesion/week6_cohesion_workshop.html) | [.rmd](https://github.com/lightsociologist/soc613spr2023/tree/main/lectures/006_cohesion/week6_cohesion_workshop.Rmd)
+Workshop: [.html](https://raw.githack.com/lightsociologist/soc613spr2023/main/lectures/006_cohesion/week6_cohesion_workshop.html) | [.rmd](https://github.com/lightsociologist/soc613spr2023/tree/main/lectures/006_cohesion/week6_cohesion_workshop.qmd)
 
 Homework: [.pdf](https://github.com/lightsociologist/soc613spr2023/tree/main/homework/006hw/w6_community.pdf) | [cheatsheet.html](https://raw.githack.com/lightsociologist/soc613spr2023/main/homework/006hw/hw6_cheat.html) | [cheatsheet.qmd](https://github.com/lightsociologist/soc613spr2023/tree/main/homework/006hw/hw6_cheat.qmd)
 
