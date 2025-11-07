@@ -53,7 +53,7 @@ Slides: These slides from previous iterations of the course are mostly redundant
 
 ### 007 Two-Mode Networks
 
-Workshop: [.html](https://raw.githack.com/lightsociologist/soc613spr2023/main/lectures/007_affiliation/w7_affiliation_workshop.html) | [.rmd](https://github.com/lightsociologist/soc613spr2023/tree/main/lectures/007_affiliation/w7_affiliation_workshop.Rmd)
+Workshop: [.html](https://raw.githack.com/lightsociologist/soc613spr2023/main/lectures/007_affiliation/w7_affiliation_workshop.html) | [.qmd](https://github.com/lightsociologist/soc613spr2023/tree/main/lectures/007_affiliation/w7_affiliation_workshop.qmd)
 
 Homework: [.pdf](https://github.com/lightsociologist/soc613spr2023/tree/main/homework/007hw/w7_affiliation_networks.pdf) | [cheatsheet.html](https://raw.githack.com/lightsociologist/soc613spr2023/main/homework/007hw/hw7_cheat.html) | [cheatsheet.qmd](https://github.com/lightsociologist/soc613spr2023/tree/main/homework/007hw/hw7_cheat.qmd)
 
