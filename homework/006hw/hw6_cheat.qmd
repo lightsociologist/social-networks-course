@@ -69,9 +69,9 @@ c1 <- cliques[[max(length(cliques))]]
 
 clique2 <- induced.subgraph(graph=orgnet,vids=c1)
 
-plot(clique2, vertex.color=V(orgnet)$region, edge.arrow.size=.1, main="Consultancy Clique (Region)")
+plot(clique2, vertex.color=V(clique2)$region, edge.arrow.size=.1, main="Consultancy Clique (Region)")
 
-plot(clique2, vertex.color=V(orgnet)$gender, edge.arrow.size=.1, main="Consultancy Clique (Gender)")
+plot(clique2, vertex.color=V(clique2)$gender, edge.arrow.size=.1, main="Consultancy Clique (Gender)")
 
 
 ```
@@ -106,7 +106,7 @@ We didn't need to plot the graphs to answer the questions in part 2, but as I al
 
 ```{r, message=FALSE}
 
-plot(clique2, vertex.color=V(orgnet)$gender, edge.arrow.size=.1, main="Consultancy Clique (Gender)")
+plot(clique2, vertex.color=V(orgnet)$gender+1, edge.arrow.size=.1, main="Consultancy Clique (Gender)")
 
 ```
 
