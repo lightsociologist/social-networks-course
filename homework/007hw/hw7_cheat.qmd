@@ -21,10 +21,9 @@ library(dplyr)
 library(tidyr)
 ```
 
-
 ## 1. Introductory Inspection
 
-First, we read the data. Next, you can answer most of the questions by analyzing the culture.df data frame. You can also easily provide an overview using the ``biblioAnalysis`` function of **Bibliometrix**. ``summary`` and ``plot`` will provide overviews to answer the introductory questions. 
+First, we read the data. Next, you can answer most of the questions by analyzing the culture.df data frame. You can also easily provide an overview using the `biblioAnalysis` function of **Bibliometrix**. `summary` and `plot` will provide overviews to answer the introductory questions.
 
 ```{r, message=FALSE}
 
@@ -37,7 +36,8 @@ summary(cul.bib, k=10)
 plot(x=cul.bib, k=5, pause=FALSE)
 
 ```
-The bonus in the section can be constructed in ggplot. There are numerous ways to do this. I find the counts for each year and discpline by counting the rows using ``n()`` in the ``summarise`` function in **dplyr** and append it to a dataframe with just the counts by year using ``bind_rows``.
+
+The bonus in the section can be constructed in ggplot. There are numerous ways to do this. I find the counts for each year and discpline by counting the rows using `n()` in the `summarise` function in **dplyr** and append it to a dataframe with just the counts by year using `bind_rows`.
 
 ```{r, message=FALSE}
 
@@ -58,9 +58,9 @@ ggplot(data = tsum, aes(x=PY, y=cnt, group=WC, color=WC))  +
 
 For this section I will build three different kinds of networks, but you can certainly build more.
 
-### i.Co-authorship Network 
+### i.Co-authorship Network
 
-First, I will build the co-authorship network. I'm going to build this network using the ``cocMatrix`` function.
+First, I will build the co-authorship network. I'm going to build this network using the `cocMatrix` function.
 
 ```{r, message=FALSE}
 
@@ -70,11 +70,11 @@ coauth <- cocMatrix(culture.df, Field="AU")
 
 #Make an Igraph object from this matrix
 
-coauth.2mode <- graph_from_incidence_matrix(coauth)
+coauth.2mode <- graph_from_biadjacency_matrix(coauth)
 
 #Make a one-mode projection of this matrix looking at columns (Author X Author)
 
-coauth.1mode <- bipartite.projection(coauth.2mode, multiplicity=TRUE, which=TRUE)
+coauth.1mode <- bipartite_projection(coauth.2mode, multiplicity=TRUE, which=TRUE)
 
 # Plot the one mode
 
@@ -82,7 +82,7 @@ plot(coauth.1mode, vertex.label=NA, vertex.size=4)
 
 # Let's get rid of isolates
 
-coauth.noiso <- delete.vertices(coauth.1mode, which(degree(coauth.1mode)==0))
+coauth.noiso <- delete_vertices(coauth.1mode, which(degree(coauth.1mode)==0))
 
 # and plot
 
@@ -94,7 +94,7 @@ table(components(coauth.noiso)$csize)
 
 #centralization
 
-centralization.degree(coauth.noiso)
+centr_degree(coauth.noiso)
 
 # density
 
@@ -111,7 +111,7 @@ Next, we can look at the keyword network in two modes.
 
 kw.mat <- cocMatrix(culture.df, Field="DE")
 
-kw.2mode <- graph_from_incidence_matrix(kw.mat)
+kw.2mode <- graph_from_biadjacency_matrix(kw.mat)
 
 # and plot
 
@@ -119,7 +119,7 @@ plot(kw.2mode, layout=layout_with_fr, vertex.label=NA, vertex.size=4)
 
 # Let's get rid of isolates - Presumambly papers without keywords
 
-kw2.noiso <- delete.vertices(kw.2mode, which(degree(kw.2mode)==0))
+kw2.noiso <- delete_vertices(kw.2mode, which(degree(kw.2mode)==0))
 
 # and plot
 
@@ -131,7 +131,7 @@ table(components(kw2.noiso)$csize)
 
 #centralization
 
-centralization.degree(kw2.noiso)
+centr_degree(kw2.noiso)
 
 # density
 
@@ -148,7 +148,7 @@ Now we can look at the keyword network in 1-mode
 
 kw.mat <- cocMatrix(culture.df, Field="DE")
 
-kw.2mode <- graph_from_incidence_matrix(kw.mat)
+kw.2mode <- graph_from_biadjacency_matrix(kw.mat)
 
 kw.1 <- bipartite_projection(kw.2mode, multiplicity=TRUE, which="true")
 
@@ -160,7 +160,7 @@ table(components(kw.1)$csize)
 
 #centralization
 
-centralization.degree(kw.1)
+centr_degree(kw.1)
 
 # density
 
@@ -192,7 +192,7 @@ comms <- cluster_louvain(gcc)
 plot(gcc, layout=layout_with_kk, vertex.label.cex=.7, vertex.size=degree(gcc), vertex.color=as.factor(comms$membership))
 ```
 
-If you want to look at the second largest component, you can identify it by size using a simple peek at component sizes in ``table`` and selecting the component size using ``which`` instead of ``which.max``.
+If you want to look at the second largest component, you can identify it by size using a simple peek at component sizes in `table` and selecting the component size using `which` instead of `which.max`.
 
 ```{r, message=FALSE}
 
@@ -214,7 +214,7 @@ Note that you can also program your way into connecting the field and the author
 
 ```{r, message=FALSE}
 
-# Not good practice to introduce here, but this is part is extra in multiple ways.
+# Not good practice to introduce here, but this part is extra in multiple ways.
 
 library(tidyverse)
 library(stringr)
@@ -352,6 +352,7 @@ plot(kw2.gcc, vertex.label = ifelse(V(kw2.gcc) %in% lab.keep, V(kw2.gcc)$name, N
 
 
 ```
+
 ### ii. Variation in one-mode
 
 ```{r, message=FALSE}
