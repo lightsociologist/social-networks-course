@@ -300,7 +300,7 @@ summary(netcor)
 
 ```
 
-We can see that the estimated p-value for the right tail is siginificant in this case p(f(perm) >= f(d)): 0.
+We can see that the estimated p-value for the right tail is siginificant in this case p(f(perm) \>= f(d)): 0.
 
 This finding is clear in the plot as well.
 
@@ -316,7 +316,7 @@ We are likely to want to move beyond bivariate relationships to also consider mu
 
 `statnet` has two functions that handle different types of data. For reference, `netlm` fits an OLS regression using QAP on a weighted network:
 
-`netlm(y, x, intercept=TRUE, mode="digraph", diag=FALSE,
+\`netlm(y, x, intercept=TRUE, mode="digraph", diag=FALSE,
 
 nullhyp=c("qap", "qapspp", "qapy", "qapx", "qapallx",
 
@@ -324,7 +324,7 @@ nullhyp=c("qap", "qapspp", "qapy", "qapx", "qapallx",
 
 test.statistic = c("t-value", "beta"), tol=1e-7,
 
-reps=1000)`
+reps=1000)\`
 
 The y here is a network object and the x is a stack of network objects. So, we have to turn "independent variables" into networks. Here, we have turned party into a network, for example, by building an affiliation matrix (families x party) and using bipartite projection to make one-mode family-family network. Results of netlm are interpreted in the exact same way as canonical OLS regression.
 
@@ -342,4 +342,4 @@ summary(nlog)
 
 ```
 
-Like logistic regression, the results include esitmates and exponentiated estimates. Both variables are statistically significant at a <.05 standard. Marital ties (x1) are a stronger predictor than party ties (x2), but having shared marital and party ties makes it far more likely that families will also share business ties.
+Like logistic regression, the results include esitmates and exponentiated estimates. Both variables are statistically significant at a \<.05 standard. Marital ties (x1) are a stronger predictor than party ties (x2), but having shared marital and party ties makes it far more likely that families will also share business ties.
